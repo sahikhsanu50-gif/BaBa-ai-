@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>BABA AI</title>
+
 <style>
 body {
   margin: 0;
@@ -65,81 +66,45 @@ footer {
 }
 </style>
 </head>
+
 <body>
 
 <header>
-  <h1>🤖 BABA AI</h1>
-  <p>AI Chat और Islamic Library</p>
-  <p>अस्सलामु अलैकुम!</p>
+<h1>🤖 BABA AI</h1>
+<p>AI Chat और Islamic Library</p>
+<p>अस्सलामु अलैकुम!</p>
 </header>
 
 <nav>
-  <a href="#home">🏠 होम</a>
-  <a href="#chat">🤖 AI चैट</a>
-  <a href="#photo">🖼️ फोटो स्टूडियो</a>
-  <a href="#library">📚 इस्लामिक लाइब्रेरी</a>
+<a href="#home">🏠 होम</a>
+<a href="#chat">🤖 AI चैट</a>
+<a href="#photo">🖼️ फोटो स्टूडियो</a>
+<a href="#library">📚 इस्लामिक लाइब्रेरी</a>
 </nav>
 
 <main>
+
 <section id="home" class="card">
-  <h2>आपका स्वागत है!</h2>
-  <p>BABA AI में आपका स्वागत है। यहाँ AI चैट, फोटो स्टूडियो और इस्लामिक किताबों के लिए एक जगह मिलेगी।</p>
+<h2>आपका स्वागत है!</h2>
+<p>BABA AI में आपका स्वागत है। यहाँ AI चैट, फोटो स्टूडियो और इस्लामिक किताबों के लिए एक जगह मिलेगी।</p>
 </section>
 
 <section id="chat" class="card">
-  <h2>🤖 BABA AI चैट</h2>
-  <p>अपना सवाल लिखें।</p>
-  <textarea id="question" placeholder="अपना सवाल यहाँ लिखें..."></textarea>
-  <button onclick="askAI()">सवाल भेजें</button>
-  <p id="answer">AI जवाब यहाँ दिखाई देगा।</p>
+<h2>🤖 BABA AI चैट</h2>
+<p>अपना सवाल लिखें।</p>
+<textarea id="question" placeholder="अपना सवाल यहाँ लिखें..."></textarea>
+<button onclick="askAI()">सवाल भेजें</button>
+<p id="answer">AI जवाब यहाँ दिखाई देगा।</p>
 </section>
 
 <section id="photo" class="card">
-  <h2>🖼️ फोटो स्टूडियो</h2>
-  <input type="file" id="photoFile" accept="image/*">
-  <select id="filter">
-    <option value="none">सामान्य</option>
-    <option value="grayscale(1)">ब्लैक एंड व्हाइट</option>
-    <option value="sepia(0.5)">गर्म रंग</option>
-  </select>
-  <br>
-  <button onclick="showPhoto()">फोटो देखें</button>
-  <div style="margin-top:15px">
-    <img id="preview" style="max-width:100%;display:none;border-radius:10px">
-  </div>
-</section>
+<h2>🖼️ फोटो स्टूडियो</h2>
+<input type="file" id="photoFile" accept="image/*">
 
-<section id="library" class="card">
-  <h2>📚 इस्लामिक लाइब्रेरी</h2>
-  <p>कुरआन, हदीस, सीरत, इस्लामी इतिहास और दुआओं के लिए लाइब्रेरी।</p>
-  <p>किताबों का पूरा और प्रमाणित पाठ जोड़ना अभी बाकी है।</p>
-</section>
-</main>
+<select id="filter">
+<option value="none">सामान्य</option>
+<option value="grayscale(1)">ब्लैक एंड व्हाइट</option>
+<option value="sepia(0.5)">गर्म रंग</option>
+</select>
 
-<footer>
-  <p>© 2026 BABA AI</p>
-</footer>
-
-<script>
-function askAI() {
-  const q = document.getElementById("question").value.trim();
-  document.getElementById("answer").textContent =
-    q ? "यह अभी डेमो है। असली AI जवाब पाने के लिए AI API जोड़नी होगी।" :
-    "कृपया पहले अपना सवाल लिखें।";
-}
-
-function showPhoto() {
-  const file = document.getElementById("photoFile").files[0];
-  if (!file) {
-    alert("पहले फोटो चुनिए।");
-    return;
-  }
-  const img = document.getElementById("preview");
-  img.src = URL.createObjectURL(file);
-  img.style.display = "block";
-  img.style.filter = document.getElementById("filter").value;
-}
-</script>
-
-</body>
-</html>
+<button onclick="showPhoto()">फोटो देखें
