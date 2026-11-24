@@ -1,79 +1,31 @@
-lang="hi"><!DOCTYPE html>
+
+
+<!DOCTYPE html>
 <html lang="hi">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>BABA AI</title>
-
 <style>
 *{box-sizing:border-box}
-body{
-margin:0;
-font-family:Arial,sans-serif;
-background:#f8f5e9;
-color:#174b35;
-}
-header{
-background:#174b35;
-color:white;
-text-align:center;
-padding:22px;
-}
+body{margin:0;font-family:Arial,sans-serif;background:#f8f5e9;color:#174b35}
+header{background:#174b35;color:white;text-align:center;padding:22px}
 header h1{margin:0;font-size:30px}
-header p{margin:8px 0 0}
-nav{
-display:flex;
-flex-wrap:wrap;
-justify-content:center;
-background:#dce9d9;
-padding:10px;
-gap:8px;
-}
-nav button{
-border:0;
-padding:10px 14px;
-border-radius:20px;
-background:#174b35;
-color:white;
-}
-section{
-background:white;
-margin:15px;
-padding:18px;
-border-radius:14px;
-box-shadow:0 2px 8px #ddd;
-}
+nav{display:flex;flex-wrap:wrap;justify-content:center;background:#dce9d9;padding:10px;gap:8px}
+button{cursor:pointer}
+nav button,.action{border:0;padding:11px 15px;border-radius:20px;background:#174b35;color:white}
+section{background:white;margin:14px;padding:17px;border-radius:14px;box-shadow:0 2px 8px #ddd}
 h2{color:#174b35}
-input,textarea{
-width:100%;
-padding:12px;
-margin:8px 0;
-border:1px solid #bbb;
-border-radius:8px;
-}
-.action{
-background:#174b35;
-color:white;
-border:0;
-padding:12px 18px;
-border-radius:8px;
-}
-#answer{
-background:#f1f5ed;
-padding:12px;
-border-radius:8px;
-margin-top:10px;
-white-space:pre-wrap;
-}
-footer{
-background:#174b35;
-color:white;
-text-align:center;
-padding:20px;
-}
+input,textarea,select{width:100%;padding:12px;margin:8px 0;border:1px solid #bbb;border-radius:8px}
+textarea{min-height:85px}
+.action{border-radius:8px;margin:4px}
+#answer{background:#f1f5ed;padding:12px;border-radius:8px;white-space:pre-wrap;min-height:50px}
+#preview{width:100%;border-radius:12px;display:none;margin-top:12px}
+.history button{display:block;width:100%;text-align:left;margin:5px 0;padding:9px;border:1px solid #ddd;background:#f8f5e9;border-radius:7px;color:#174b35}
+.item{padding:12px;border-bottom:1px solid #ddd}
+footer{background:#174b35;color:white;text-align:center;padding:20px}
 </style>
 </head>
-
 <body>
 
 <header>
@@ -86,93 +38,121 @@ padding:20px;
 <button onclick="go('chat')">AI Chat</button>
 <button onclick="go('photo')">Photo Studio</button>
 <button onclick="go('library')">Islamic Library</button>
+<button onclick="go('study')">Study Assistant</button>
 </nav>
 
 <section id="home">
 <h2>अस्सलामु अलैकुम 🤝</h2>
 <p>BABA AI में आपका स्वागत है।</p>
-<p>यहाँ आपको AI Chat, Photo Studio और Islamic Library मिलेगी।</p>
+<p>आपका अपना बहुभाषी AI Assistant।</p>
+<button class="action" onclick="go('chat')">AI से बात करें</button>
+<button class="action" onclick="go('library')">Islamic Library</button>
 </section>
 
 <section id="chat">
 <h2>🤖 BABA AI Chat</h2>
+<select id="language">
+<option>हिंदी</option>
+<option>اردو</option>
+<option>English</option>
+<option>ગુજરાતી</option>
+<option>العربية</option>
+</select>
+<select id="mode">
+<option value="general">General Assistant</option>
+<option value="islamic">Islamic Assistant</option>
+<option value="study">Study Assistant</option>
+</select>
+<button class="action" onclick="newChat()">＋ New Chat</button>
+<div id="answer">अस्सलामु अलैकुम! मैं BABA AI हूँ।</div>
 <textarea id="question" placeholder="अपना सवाल लिखें..."></textarea>
-<button class="action" onclick="ask()">Send</button>
-<div id="answer">BABA AI में आपका स्वागत है।</div>
-<p><small>अभी यह डेमो चैट है। असली AI जोड़ने के लिए सुरक्षित सर्वर और AI API की जरूरत होगी।</small></p>
+<button class="action" onclick="ask()">Send ➤</button>
+<button class="action" onclick="copyAnswer()">Copy Answer</button>
+<h3>💬 Chat History</h3>
+<div id="history" class="history"></div>
 </section>
 
 <section id="photo">
 <h2>📸 AI Photo Studio</h2>
-<p>अपनी फोटो चुनें:</p>
 <input type="file" id="photoFile" accept="image/*">
 <select id="filter">
 <option value="none">Normal</option>
 <option value="grayscale(1)">Black & White</option>
 <option value="sepia(0.7)">Warm</option>
 <option value="saturate(1.8)">Colorful</option>
+<option value="brightness(1.2)">Bright</option>
 </select>
-<button class="action" onclick="editPhoto()">Apply</button>
-<br><br>
-<img id="preview" style="width:100%;border-radius:12px;display:none">
+<button class="action" onclick="editPhoto()">Apply Filter</button>
+<img id="preview">
+<button class="action" onclick="savePhoto()">Download Photo</button>
 </section>
 
 <section id="library">
 <h2>📚 Islamic Library</h2>
-
+<div class="item">
 <h3>📖 Quran Sharif</h3>
-<p>कुरआन शरीफ</p>
-
+<p>कुरआन शरीफ और अनुवाद</p>
+</div>
+<div class="item">
 <h3>📜 Hadith</h3>
-<p>हदीस की जानकारी</p>
-
+<p>हदीस और व्याख्या</p>
+</div>
+<div class="item">
 <h3>🌙 Seerat-un-Nabi ﷺ</h3>
-<p>पैगंबर मुहम्मद ﷺ की सीरत</p>
-
+<p>नबी ﷺ की सीरत</p>
+</div>
+<div class="item">
 <h3>🤲 Dua & Azkar</h3>
 <p>दुआ और अज़कार</p>
-
+</div>
+<div class="item">
 <h3>📚 Islamic History</h3>
 <p>इस्लामी इतिहास</p>
-
-<p>भाषाएँ: हिंदी | उर्दू | अरबी | अंग्रेज़ी | गुजराती</p>
+</div>
+<p>हिंदी | उर्दू | अरबी | अंग्रेज़ी | गुजराती</p>
 </section>
 
-<footer>
-<p>© 2026 BABA AI</p>
-<p>Made with ❤️</p>
-</footer>
-
-<script>
-function go(id){
-document.getElementById(id).scrollIntoView({
-behavior:"smooth"
-});
-}
-
-function ask(){
-let q=document.getElementById("question").value;
-if(!q.trim()){
-alert("पहले अपना सवाल लिखें");
-return;
-}
-document.getElementById("answer").innerText=
-"आपका सवाल: "+q+
-"\n\nयह अभी डेमो संस्करण है। असली AI सेवा जल्द जोड़ी जाएगी।";
+<section id="study">
+<h2>🎓 Study Assistant</h2>
+<p>पढ़ाई और सामान्य ज्ञान में सहायता।</p>
+<button class="action" onclick="setMode('study')">Study शुरू करें</button>
+<button class="action" onclick="setMode('general')">General Knowledge</button>
+</section>
+हो सका।"));
 }
 
 function editPhoto(){
-let file=document.getElementById("photoFile").files[0];
-if(!file){
-alert("पहले फोटो चुनें");
-return;
+ const file=document.getElementById("photoFile").files[0];
+ if(!file){alert("पहले फोटो चुनें");return;}
+ const img=document.getElementById("preview");
+ img.src=URL.createObjectURL(file);
+ img.style.filter=document.getElementById("filter").value;
+ img.style.display="block";
 }
-let img=document.getElementById("preview");
-img.src=URL.createObjectURL(file);
-img.style.filter=document.getElementById("filter").value;
-img.style.display="block";
-}
-</script>
 
+function savePhoto(){
+ const img=document.getElementById("preview");
+ if(img.style.display==="none" || !img.src){
+  alert("पहले फोटो चुनें");
+  return;
+ }
+ const canvas=document.createElement("canvas");
+ const ctx=canvas.getContext("2d");
+ const picture=new Image();
+ picture.onload=()=>{
+  canvas.width=picture.naturalWidth;
+  canvas.height=picture.naturalHeight;
+  ctx.filter=document.getElementById("filter").value;
+  ctx.drawImage(picture,0,0);
+  const link=document.createElement("a");
+  link.download="BABA-AI-Photo.png";
+  link.href=canvas.toDataURL("image/png");
+  link.click();
+ };
+ picture.src=img.src;
+}
+
+renderHistory();
+</script>
 </body>
 </html>
